@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pylab as plt
+import matplotlib as plt_ori
 from itertools import cycle, islice
 
 # This line lets us plot on our ipython notebook
@@ -112,23 +113,19 @@ def VotePercentagePlot(data, Locations, Contest, Candidate, Color):
 
     s = np.log(df_merged['Percentage']/100)
     plt.figure();
-    p4 = plt.scatter(df_merged['X'],df_merged['Y'] ,s=-s*500, alpha = 0.2, color = Color)
+    p4_perc = plt.scatter(df_merged['X'],df_merged['Y'] ,s=-s*500, alpha = 0.2, color = Color)
+    p4_loc = plt.scatter(df_merged['X'],df_merged['Y'] ,s=1, color = Color)
+    plt.xlabel('longitude')
+    plt.ylabel('Latitude')
+    plt.title('Votes Map for {}'.format(Candidate))
     plt.show()
-
-
-    #return df_merged
-
-s = np.log(df_merged['Percentage']/100)
-
-
-plt.scatter(df_merged['X'],df_merged['Y'] ,s=-s*500,alpha = 0.1)
 
 # Map 1: Votes for Trump
 # Add your code below:
 data = df_precinct_result
 Locations = df_precinct_locations
 
-VotePercentagePlot(data, Locations, 'PRESIDENTIAL ELECTORS', 'DONALD J TRUMP,  PRESIDENT','r')
+VotePercentagePlot(data, Locations, 'PRESIDENTIAL ELECTORS', 'DONALD J TRUMP,  PRESIDENT','#FF4500')
 
 # Map 2: Votes for Clinton
 # Add your code below:
