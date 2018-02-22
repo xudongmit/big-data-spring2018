@@ -27,10 +27,13 @@ import matplotlib.pylab as plt
 
 # This line lets us plot on our ipython notebook
 %matplotlib inline
+# my prefered plot style
+plt.style.use('ggplot')
 
 # Read in the data
-
-df = pd.read_csv('week-03/data/skyhook_2017-07.csv', sep=',')
+import os
+os.chdir('E:/MIT3/BigData2018/big-data-spring2018/week-03')
+df = pd.read_csv('data/skyhook_2017-07.csv', sep=',')
 
 # Create a new date column formatted as datetimes.
 df['date_new'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
@@ -66,6 +69,15 @@ Your first task is to create a bar chart (not a line chart!) of the total count 
 ### Solution
 
 ```python
+num_pings = df.groupby('date')['count'].sum()
+df_num_pings_bydate = pd.DataFrame(num_pings)
+df_num_pings_bydate.head()
+plt.figure();
+p2 = df_num_pings_bydate.plot(kind = 'bar',alpha = 0.5,color='#FF4500')
+plt.xlabel('Date')
+plt.ylabel('Pings Count')
+plt.title('Number of Pings by Date ')
+plt.show()
 
 ```
 
@@ -78,7 +90,12 @@ After running your code, you should have either a new column in your DataFrame o
 ### Solution
 
 ```python
-
+df['hour'].max()
+# After cleaning the observations whose hours do not match weekdays, we can assume all 'hour' value is valid. Therefore, hour%24 is the hour value in 24-hour increments
+# For example, the hour 0, 24, 48, 72... will be the hour%24 = 0 hour for each day. But considering the 5 hour time gap, they are actually 5th hour (= (hour + 5)%24 ). The real 0 hour is 163,19,43,67,91,115,139, whose hour%24 are 19, 19,... (hour+5)%24 are 0, 0, 0...
+df['hour'] = df['hour'].apply(lambda x: (x+5)%24)
+df['hour'].describe()
+df.groupby('hour')['count'].sum()
 ```
 
 ## Problem 3: Create a Timestamp Column
@@ -88,7 +105,8 @@ Now that you have both a date and a time (stored in a more familiar 24-hour rang
 ### Solution
 
 ```python
-
+df['timestamp'] = pd.to_datetime(df['date']) + pd.to_timedelta(df['hour'], unit = 'h')
+df['timestamp'].head()
 ```
 
 ## Problem 4: Create Two Line Charts of Activity by Hour
@@ -98,7 +116,18 @@ Create two more graphs. The first should be a **line plot** of **total activity*
 ### Solution
 
 ```python
+# The line plot of total activity by timestamp
 
+df.groupby('timestamp')['count'].sum().plot()
+
+# The bar chart of summed counts by hours of the day
+df_num_pings_byhour = pd.DataFrame(df.groupby('hour')['count'].sum())
+plt.figure();
+p4 = df_num_pings_byhour.plot(kind = 'bar',alpha = 0.5,color='#FF4500')
+plt.xlabel('Hours of the Day')
+plt.ylabel('Pings Count')
+plt.title('Number of Pings by Date ')
+plt.show()
 ```
 
 ## Problem 5: Create a Scatter Plot of Shaded by Activity
@@ -106,5 +135,48 @@ Create two more graphs. The first should be a **line plot** of **total activity*
 Pick three times (or time ranges) and use the latitude and longitude to produce scatterplots of each. In each of these scatterplots, the size of the dot should correspond to the number of GPS pings. Find the [Scatterplot documentation here](http://pandas.pydata.org/pandas-docs/version/0.19.1/visualization.html#scatter-plot). You may also want to look into how to specify a pandas Timestamp (e.g., pd.Timestamp) so that you can write a mask that will filter your DataFrame appropriately. Start with the [Timestamp documentation](https://pandas.pydata.org/pandas-docs/stable/timeseries.html#timestamps-vs-time-spans)!
 
 ```python
+df_selected.shape
+
+size.head()
+
+
+def pings_during_time(start, end, data, Color = '#FF4500', Filename = '1'):
+    df = data
+    df_selected = df[(df['timestamp'] >= start) & (df['timestamp'] <= end)]
+    # plot
+    p = plt.figure();
+    plt.scatter(df_selected['lon'],df_selected['lat'] ,s = df_selected['count']/10, alpha = 0.1, color = Color)
+    plt.xlabel('longitude')
+    plt.ylabel('Latitude')
+    plt.title('GPS Pings From {} to {}'.format(str(start), str(end)))
+    plt.show()
+    p.savefig(Filename + '.png',dpi = 2048, bbox_inches = 'tight')
+
+# Time range 1: 07-04, 0:00 24:00
+start1 = pd.to_datetime('2017-07-04')
+end1 = pd.to_datetime('2017-07-05')
+pings_during_time(start = start1, end = end1, data = df, Filename = '1')
+
+# Time range 2: 07-15, 0:00 3:00
+start2 = pd.to_datetime('2017-07-15 00:00:00')
+end2 = pd.to_datetime('2017-07-15 01:00:00')
+pings_during_time(start = start2, end = end2, data = df, Filename = '2')
+
+# Time range 3: 07-30, 23:00 to 07-31 2:00
+start3 = pd.to_datetime('2017-07-30 23:00:00')
+end3 = pd.to_datetime('2017-07-31 1:00:00')
+pings_during_time(start = start3, end = end3, data = df, Color = 'b',Filename = '3')
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```
