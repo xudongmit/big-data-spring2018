@@ -145,7 +145,7 @@ def pings_during_time(start, end, data, Color = '#FF4500', Filename = '1'):
     df_selected = df[(df['timestamp'] >= start) & (df['timestamp'] <= end)]
     # plot
     p = plt.figure();
-    plt.scatter(df_selected['lon'],df_selected['lat'] ,s = df_selected['count']/10, alpha = 0.1, color = Color)
+    plt.scatter(df_selected['lon'],df_selected['lat'] ,s = df_selected['count']/10, alpha = 0.8, facecolors = 'none',edgecolors = Color,linewidth = 0.01)
     plt.xlabel('longitude')
     plt.ylabel('Latitude')
     plt.title('GPS Pings From {} to {}'.format(str(start), str(end)))
@@ -159,13 +159,25 @@ pings_during_time(start = start1, end = end1, data = df, Filename = '1')
 
 # Time range 2: 07-15, 0:00 3:00
 start2 = pd.to_datetime('2017-07-15 00:00:00')
-end2 = pd.to_datetime('2017-07-15 01:00:00')
+end2 = pd.to_datetime('2017-07-15 06:00:00')
 pings_during_time(start = start2, end = end2, data = df, Filename = '2')
 
 # Time range 3: 07-30, 23:00 to 07-31 2:00
 start3 = pd.to_datetime('2017-07-30 23:00:00')
-end3 = pd.to_datetime('2017-07-31 1:00:00')
+end3 = pd.to_datetime('2017-07-31 5:00:00')
 pings_during_time(start = start3, end = end3, data = df, Color = 'b',Filename = '3')
+
+ df_test = pd.DataFrame({'X':[1,2,3,4,1.001,1.002],'Y':[1,2,3,4,1.001,1.002],'Count':[10,11,15,13,8,2]})
+
+
+plt.scatter(df_test['X'],df_test['Y'] ,s = df_test['Count']*200, alpha = 0.1, color = 'b')
+
+
+
+
+
+
+
 
 
 

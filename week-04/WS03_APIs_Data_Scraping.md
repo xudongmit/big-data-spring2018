@@ -66,7 +66,7 @@ import pandas as pd
 # Imports the keys from the python file
 # You may need to change working directory
 import os
-os.chdir('week-04')
+os.chdir('e:/MIT3/BigData2018/big-data-spring2018/week-04')
 from twitter_keys import api_key, api_secret
 ```
 
