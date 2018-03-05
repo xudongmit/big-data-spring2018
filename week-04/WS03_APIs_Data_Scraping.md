@@ -206,12 +206,7 @@ file_name = 'data/tweets.json'
 # to get more than one
 t_max = 200
 
-get_tweets(
-  geo = geocode_query,
-  tweet_max = t_max,
-  write = True,
-  out_file = file_name
-)
+get_tweets(geo = geocode_query,tweet_max = t_max,write = True,out_file = file_name)
 ```
 
 This function will run as is, allowing you to download Tweets to a `.json` file---give it a go! However, we might also want to download it into a more Python-legible format so that we can manipulate it and analyze it.
@@ -247,12 +242,7 @@ We can now uncomment the lines that read `all_tweets = pd.DataFrame()`, `all_twe
 Now we can run the `get_tweets` function using the following statement. Because we're now returning a `DataFrame`, we want to bind the result of this function to a variable like so:
 
 ```python
-tweets = get_tweets(
-  geo = geocode_query,
-  tweet_max = t_max,
-  write = True,
-  out_file = file_name
-)
+tweets = get_tweets(geo = geocode_query,tweet_max = t_max,write = True,out_file = file_name)
 ```
 
 ## Reloading Downloaded Data
@@ -262,7 +252,7 @@ We're about to start cleaning our data; cleaning is not an exact science, and so
 We can always reload our data by running the below command, where `df` is an arbitrary variable name and `path/example_json.json` is the path to, for example, your Tweets:
 
 ```python
-df = pd.read_json('path/example_json.json')
+df = pd.read_json('E:/MIT3/BigData2018/big-data-spring2018/week-04/data/tweets.json')
 ```
 
 ## Let's Explore the Tweets
@@ -274,6 +264,8 @@ Let's look through the DataFrame and peek at the Tweets we just downloaded. Firs
 import numpy as np
 import matplotlib.pyplot as plt
 %matplotlib inline
+# my prefered plot style
+plt.style.use('ggplot')
 ```
 
 Next, let's explore our data a bit. Frequently, it is very helpful to visually examine your data as you're cleaning to get a sense of what must be done; we'll be doing this with the Tweets we grabbed from Twitter. Building on last week, we can do this in Pandas.

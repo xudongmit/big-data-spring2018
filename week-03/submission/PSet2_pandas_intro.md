@@ -126,7 +126,7 @@ plt.figure();
 p4 = df_num_pings_byhour.plot(kind = 'bar',alpha = 0.5,color='#FF4500')
 plt.xlabel('Hours of the Day')
 plt.ylabel('Pings Count')
-plt.title('Number of Pings by Date ')
+plt.title('Number of Pings by Hour')
 plt.show()
 ```
 
@@ -167,10 +167,7 @@ start3 = pd.to_datetime('2017-07-30 23:00:00')
 end3 = pd.to_datetime('2017-07-31 5:00:00')
 pings_during_time(start = start3, end = end3, data = df, Color = 'b',Filename = '3')
 
- df_test = pd.DataFrame({'X':[1,2,3,4,1.001,1.002],'Y':[1,2,3,4,1.001,1.002],'Count':[10,11,15,13,8,2]})
 
-
-plt.scatter(df_test['X'],df_test['Y'] ,s = df_test['Count']*200, alpha = 0.1, color = 'b')
 
 
 
