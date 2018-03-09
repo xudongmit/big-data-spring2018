@@ -26,6 +26,7 @@ One of the dangers of cleaning data is that you inadvertently delete data that i
 
 ### Step 1
 
+<<<<<<< HEAD
 
 Using the Twitter REST API, collect at least 80,000 tweets. Do not specify a search term. Use a lat/lng of `42.359416,-71.093993` and a radius of `5mi`. Note that this will probably take 20-30 minutes to run.
 #### Solution.
@@ -147,6 +148,9 @@ tweets = get_tweets(geo = geocode_query,tweet_max = t_max,write = True,out_file 
 
 tweets.to_csv('data/raw_data.csv', sep=',', encoding='utf-8')
 ```
+=======
+Using the Twitter REST API, collect at least 2,000 tweets. Do not specify a search term. Use a lat/lng of `42.359416,-71.093993` and a radius of `5mi`. This will take 1-2 minutes to run.
+>>>>>>> class/master
 
 ### Step 2
 
@@ -266,10 +270,14 @@ tweet_scatter(tweets_geo)
 ```
 ### Step 4
 
+<<<<<<< HEAD
 Pick a search term (e.g., "housing", "climate", "flood") and collect tweets containing it. Use the same lat/lon and search radius for Boston as you used above. Dpending on the search term, you may find that there are relatively few available tweets.
 #### Solution
 ```Python
 tweets4 = get_tweets(geo = geocode_query, search_term = 'MIT',tweet_max = t_max,write = True,out_file = 'tweets4.json')
+=======
+Pick a search term (e.g., "housing", "climate", "flood") and collect tweets containing it. Use the same lat/lon and search radius for Boston as you used above. Use a maximum of 2,000 tweets; depending on the search term, you may find that there are fewer than 2,000 tweets available.
+>>>>>>> class/master
 
 tweets.to_csv('data/raw_data4.csv', sep=',', encoding='utf-8')
 ```

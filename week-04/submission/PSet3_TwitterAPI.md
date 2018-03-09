@@ -326,6 +326,42 @@ Build a scraper that downloads and parses the Wikipedia [List of Countries by Gr
 
 #### Solution
 ```Python
+import requests
+import bs4
+response = requests.get('https://en.wikipedia.org/wiki/List_of_countries_by_greenhouse_gas_emissions')
+soup = bs4.BeautifulSoup(response.text, "html.parser")
+
+trs =  soup.find_all('tr')
+
+import os
+os.chdir('e:/MIT3/BigData2018/big-data-spring2018/week-04/submission/data')
+
+f = open('data1.txt','a') # open new file, make sure path to your data file is correct
+
+for tr in trs[2:]:
+	try:
+		# We can check if the tr aligns with the standard format like tr[2] shown above
+
+		country = tr.a.string
+		num = ''
+		for td in tr:
+			num = num + (str(td.string).strip('\n')) + ','
+
+		if num:
+			entry = str(country) + "," + num
+			entry = entry.replace(',,',',')
+			f.write(entry + "\n")
+		else:
+			continue
+	except:
+		continue
+	 # write line break
+f.close()
+df = pd.read_csv('data1.txt', sep=',',names=['Country', 'None','GHG emissions', 'Percentage of Global Total'], index_col = False)
+df.head()
+df.drop('None',axis = 1)
+df = df[0:185]
+df.to_csv('Wiki_GHG_emissions.csv', sep=',', encoding='utf-8')
 
 
 

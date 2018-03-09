@@ -1,0 +1,186 @@
+,Country,None,GHG emissions,Percentage of Global Total
+0,China,None,11735.0071,25.93%
+1,United States,None,3526.2589,7.79%
+2,European Union,None,4224.5217,9.33%
+3,European Union,None,3374.0348,7.45%
+4,India,None,2909.0566,6.43%
+5,Russia,None,2199.1173,4.86%
+6,Japan,None,1353.3473,2.99%
+7,Brazil,None,1017.8745,2.25%
+8,Germany,None,894.0570,1.98%
+9,Indonesia,None,744.3403,1.64%
+10,Canada,None,738.3825,1.63%
+11,Mexico,None,733.0104,1.62%
+12,Iran,None,716.8149,1.58%
+13,South Korea,None,673.5412,1.49%
+14,Australia,None,580.0997,1.28%
+15,Saudi Arabia,None,546.8181,1.21%
+16,United Kingdom,None,546.2641,1.21%
+17,South Africa,None,510.2377,1.13%
+18,France,None,440.8485,0.97%
+19,Italy,None,420.8244,0.93%
+20,Turkey,None,408.4574,0.90%
+21,Ukraine,None,375.6670,0.83%
+22,Thailand,None,369.4310,0.82%
+23,Poland,None,361.1905,0.80%
+24,Argentina,None,334.2374,0.74%
+25,Pakistan,None,326.7740,0.72%
+26,Kazakhstan,None,313.7248,0.69%
+27,Spain,None,306.6117,0.68%
+28,Nigeria,None,304.0637,0.67%
+29,Malaysia,None,303.1518,0.67%
+30,Iraq,None,284.5679,0.63%
+31,Egypt,None,272.3785,0.60%
+32,Venezuela,None,268.4274,0.59%
+33,Vietnam,None,256.7606,0.57%
+34,Uzbekistan,None,225.7986,0.50%
+35,United Arab Emirates,None,221.4243,0.49%
+36,Kuwait,None,195.7803,0.43%
+37,Algeria,None,187.2679,0.41%
+38,Netherlands,None,186.7775,0.41%
+39,Philippines,None,171.6044,0.38%
+40,Bangladesh,None,163.6298,0.36%
+41,Colombia,None,159.5837,0.35%
+42,Angola,None,155.7220,0.34%
+43,Libya,None,133.0112,0.29%
+44,Ethiopia,None,123.3709,0.27%
+45,Czech Republic,None,120.9859,0.27%
+46,Belgium,None,113.4088,0.25%
+47,Turkmenistan,None,112.2850,0.25%
+48,Romania,None,109.4851,0.24%
+49,Chile,None,103.5626,0.23%
+50,Oman,None,101.7895,0.22%
+51,Myanmar,None,98.7527,0.22%
+52,Belarus,None,90.4979,0.20%
+53,Israel,None,89.5907,0.20%
+54,Greece,None,86.9692,0.19%
+55,Peru,None,86.2102,0.19%
+56,Cameroon,None,83.2755,0.18%
+57,Qatar,None,82.8463,0.18%
+58,Morocco,None,78.8839,0.17%
+59,Austria,None,78.4743,0.17%
+60,Tanzania,None,77.9457,0.17%
+61,New Zealand,None,75.0919,0.17%
+62,Azerbaijan,None,69.7221,0.15%
+63,Syria,None,65.8195,0.15%
+64,North Korea,None,63.8065,0.14%
+65,Finland,None,63.5322,0.14%
+66,Portugal,None,62.0311,0.14%
+67,Kenya,None,60.1371,0.13%
+68,Ireland,None,59.2123,0.13%
+69,Serbia,None,59.0182,0.13%
+70,Ecuador,None,58.2656,0.13%
+71,Hungary,None,56.9204,0.13%
+72,Bulgaria,None,54.8549,0.12%
+73,Singapore,None,52.9509,0.12%
+74,Denmark,None,52.8873,0.12%
+75,Switzerland,None,51.5705,0.11%
+76,Sweden,None,50.8451,0.11%
+77,Zambia,None,50.1033,0.11%
+78,Central African Republic,None,49.2281,0.11%
+79,Bolivia,None,46.8039,0.10%
+80,Norway,None,46.5925,0.10%
+81,Cuba,None,46.5085,0.10%
+82,Afghanistan,None,44.4157,0.10%
+83,Slovakia,None,40.3202,0.09%
+84,Democratic Republic of the Congo,None,39.5590,0.09%
+85,Mongolia,None,38.6367,0.09%
+86,Sri Lanka,None,38.3764,0.08%
+87,Paraguay,None,37.5747,0.08%
+88,Nepal,None,36.0311,0.08%
+89,Tunisia,None,35.6478,0.08%
+90,Yemen,None,35.5020,0.08%
+91,Uruguay,None,34.0277,0.08%
+92,Bahrain,None,33.4062,0.07%
+93,Uganda,None,33.3506,0.07%
+94,Dominican Republic,None,33.1665,0.07%
+95,Ivory Coast,None,31.9607,0.07%
+96,Ghana,None,30.8917,0.07%
+97,Jordan,None,30.8217,0.07%
+98,Mali,None,29.1982,0.06%
+99,Bosnia and Herzegovina,None,28.4488,0.06%
+100,Chad,None,28.4407,0.06%
+101,Mozambique,None,27.4629,0.06%
+102,Zimbabwe,None,27.4014,0.06%
+103,Cambodia,None,27.0972,0.06%
+104,Lebanon,None,26.9435,0.06%
+105,Guatemala,None,26.6116,0.06%
+106,Niger,None,26.6106,0.06%
+107,Madagascar,None,26.4428,0.06%
+108,Trinidad and Tobago,None,25.8122,0.06%
+109,Senegal,None,25.4859,0.06%
+110,Burkina Faso,None,23.5054,0.05%
+111,Croatia,None,23.4770,0.05%
+112,Estonia,None,23.3476,0.05%
+113,Honduras,None,21.1110,0.05%
+114,Equatorial Guinea,None,20.7597,0.05%
+115,Lithuania,None,19.3235,0.04%
+116,Brunei,None,19.0151,0.04%
+117,Slovenia,None,18.0226,0.04%
+118,Panama,None,17.0885,0.04%
+119,Guinea,None,16.4436,0.04%
+120,Papua New Guinea,None,16.4336,0.04%
+121,Kyrgyzstan,None,15.4959,0.03%
+122,Georgia,None,14.7952,0.03%
+123,Nicaragua,None,14.0877,0.03%
+124,Costa Rica,None,13.7952,0.03%
+125,Botswana,None,12.9246,0.03%
+126,Latvia,None,12.6443,0.03%
+127,Benin,None,12.1686,0.03%
+128,Macedonia,None,12.0650,0.03%
+129,El Salvador,None,11.5955,0.03%
+130,Laos,None,11.4916,0.03%
+131,Moldova,None,11.4641,0.03%
+132,Luxembourg,None,11.2914,0.02%
+133,Namibia,None,11.2817,0.02%
+134,Mauritania,None,11.1908,0.02%
+135,Tajikistan,None,10.2444,0.02%
+136,Malawi,None,10.1260,0.02%
+137,Belize,None,9.6848,0.02%
+138,Jamaica,None,9.5010,0.02%
+139,Armenia,None,8.5935,0.02%
+140,Albania,None,8.3078,0.02%
+141,Haiti,None,8.0637,0.02%
+142,Gambia,None,7.4691,0.02%
+143,Gabon,None,7.3587,0.02%
+144,Republic of the Congo,None,6.9438,0.02%
+145,Cyprus,None,6.9364,0.02%
+146,Sierra Leone,None,6.7302,0.01%
+147,Eritrea,None,6.6813,0.01%
+148,Rwanda,None,6.6307,0.01%
+149,Togo,None,6.5823,0.01%
+150,Mauritius,None,5.6704,0.01%
+151,Lesotho,None,4.2026,0.01%
+152,Guyana,None,4.0547,0.01%
+153,Barbados,None,3.5448,0.01%
+154,Bahamas,None,3.4083,0.01%
+155,Montenegro,None,3.3881,0.01%
+156,Suriname,None,3.3542,0.01%
+157,Burundi,None,3.0465,0.01%
+158,Malta,None,2.9785,0.01%
+159,Iceland,None,2.9290,0.01%
+160,Swaziland,None,2.8598,0.01%
+161,Fiji,None,2.7564,0.01%
+162,Liberia,None,2.1519,0.00%
+163,Grenada,None,2.0022,0.00%
+164,Guinea-Bissau,None,1.9723,0.00%
+165,Bhutan,None,1.4583,0.00%
+166,Djibouti,None,1.3934,0.00%
+167,Maldives,None,1.1360,0.00%
+168,Saint Lucia,None,1.1330,0.00%
+169,Antigua and Barbuda,None,1.0993,0.00%
+170,Seychelles,None,0.7113,0.00%
+171,Vanuatu,None,0.6735,0.00%
+172,Cape Verde,None,0.6000,0.00%
+173,Solomon Islands,None,0.5595,0.00%
+174,Samoa,None,0.5099,0.00%
+175,Saint Kitts and Nevis,None,0.4262,0.00%
+176,Tonga,None,0.4116,0.00%
+177,Comoros,None,0.4038,0.00%
+178,Palau,None,0.3576,0.00%
+179,Saint Vincent and the Grenadines,None,0.2753,0.00%
+180,Dominica,None,0.2399,0.00%
+181,Cook Islands,None,0.1092,0.00%
+182,Niue,None,0.0912,0.00%
+183,Kiribati,None,0.0844,0.00%
+184,Nauru,None,0.0498,0.00%
