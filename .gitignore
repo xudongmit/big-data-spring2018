@@ -1,15 +1,12 @@
 **/.DS_Store
 **/.ipynb_checkpoints/*
 week-04/**/twitter_keys.py
-<<<<<<< HEAD
-**/__pycache__/*
-**/__pycache__/*
-
+**/__pycache__/*\
 
 =======
 **/__pycache__/*\
+week-11/*
 >>>>>>> class/master
-
 **/superceded/*
 week-03/data/skyhook_cleaned.csv
 week-03/data/skyhook_2017-07.csv
