@@ -14,4 +14,5 @@ week-03/data/skyhook_2017-07.csv
 week-04/data/*.json
 week-05/boston_landsat/*
 week-05/ws04_materials/*
-week-05/submission/*
+
+week-09/submission/data/*
