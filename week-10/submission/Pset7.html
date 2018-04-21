@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+
+.zones{
+  fill: none;
+  stroke: white;
+  stroke-linejoin: round;
+}
+
+
+.tooltip{
+     position: absolute;
+     text-align: center;
+}
+
+
+
+</style>
+<title>Mapping with D3</title>
+</head>
+
+
+
+<body>
+    <svg width="1000" height="900"></svg>
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+	<script src="http://d3js.org/topojson.v2.min.js"></script>
+	<script src="https://d3js.org/d3-queue.v2.min.js"></script>
+	<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+	<script src="https://d3js.org/d3-format.v1.min.js"></script>
+	<!-- Page elements and content go here. -->
+	<script>
+		// Our D3 code will go here.
+        var svg = d3.select("svg"),
+            width = +svg.attr("width"),
+            height = +svg.attr("height");
+
+        var data = d3.map();
+
+		var albersProjection = d3.geoAlbers()
+			.scale( 200000 )
+			.rotate( [71.057,0] )
+			.center( [0, 42.313] )
+			.translate( [width/2,height/2] );
+
+		var path = d3.geoPath()
+		    .projection(albersProjection);
+
+		var x = d3.scaleLinear()
+			.domain([0.1, 0.3])
+			.rangeRound([600, 700]);
+
+		var color_domain = d3.range(0.0,0.5,0.1);
+		color_domain = color_domain.map(function(each_element){
+		    return Number(each_element.toFixed(2));
+		});
+
+		var color_scheme = d3.schemeBlues[5];
+
+
+		var color = d3.scaleThreshold()
+		    .domain(color_domain)
+		    .range(color_scheme);
+
+
+
+		// legend
+		var g = svg.append("g")
+			.attr("class", "key")
+			.attr("transform", "translate(0,40)");
+
+
+		g.selectAll("rect")
+			  .data(color.range().map(function(d) {
+			      d = color.invertExtent(d);
+			      if (d[0] == null) d[0] = x.domain()[0];
+			      if (d[1] == null) d[1] = x.domain()[1];
+				  //if (d[0] > d[1]) d[0] = -1 * d[0];
+			      return d;
+			    }))
+			  .enter().append("rect")
+			    .attr("height", 8)
+			    .attr("x", function(d) { return x(d[0]); })
+			    .attr("width", function(d) { return Math.abs(x(d[1]) - x(d[0])); })
+			    .attr("fill", function(d) { return color(d[0]); });
+
+			g.append("text")
+			    .attr("class", "caption")
+			    .attr("x", x.range()[0]-50)
+			    .attr("y", -6)
+			    .attr("fill", "#000")
+			    .attr("text-anchor", "start")
+			    .attr("font-weight", "bold")
+			    .text("% of 311 Request from Twitter");
+
+			g.call(d3.axisBottom(x)
+			    .tickSize(13)
+			    .tickFormat(function(x, i) { return i ? x : x + "%"; })
+			    .tickValues(color.domain())
+
+				)
+			  .select(".domain")
+			    .remove();
+
+
+        //  Create Tooltip
+        var tooltip = d3.select("body")
+                                    .append("div")
+                                    .attr("class","tooltip")
+                                    .style("font-family", "'Open Sans', sans-serif")
+                                	.style("font-size", "12px")
+                                	.style("z-index", "10")
+                                    .style("padding", "5px")
+                                    .style("background-color","white")
+                                	.style("opacity", 0.7)
+                                    .style("visibility", "hidden");
+
+
+
+		// Load data
+		d3.queue()
+		    .defer(d3.json, "data/boston_neigh.json")
+			.defer(d3.csv, "data/boston_311_totals.csv")
+		    .await(ready); // Run 'ready' when JSONs are loaded
+			// Ready Function, runs when data is loaded
+
+		function ready(error, neigh, totals) {
+			if (error) throw error;
+
+			var PercById = {};
+		    totals.forEach(function(d) {
+			    PercById[d.id] = +d.twit_count/+d.tot_count*100;
+			  });
+			// console.log(PercById)
+
+			svg.append("g")
+			        .attr("class", "zones")
+			    .selectAll("path")
+			        .data(topojson.feature(neigh, neigh.objects.boston_neigh).features)
+			    .enter().append("path")
+                    .attr("d", path)
+    				.style("fill", function (d){
+    							return color(PercById[d.properties.OBJECTID]);
+    						})
+                    .on("mouseover", function(d){
+                		tooltip.style("visibility", "visible")
+                                        .text(d.properties.Name + ": " + Number(PercById[d.properties.OBJECTID].toFixed(2)) + "%");
+                	    })
+                	.on("mousemove", function(d){
+                		tooltip.style("top", (d3.event.pageY-10)+"px")
+                                        .style("left",(d3.event.pageX+10)+"px")
+                        })
+                	.on("mouseout", function(d){
+                		tooltip.style("visibility", "hidden");
+                	    })
+
+
+                ;
+			}
+
+
+
+	</script>
+</body>
+</html>
