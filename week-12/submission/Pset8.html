@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+
+.zones{
+  fill: none;
+  stroke: #fff;
+  stroke-linejoin: round;
+}
+
+
+.tooltip{
+     position: absolute;
+     text-align: center;
+}
+
+.hover {
+			stroke-width: 2px;
+			opacity: 0.5;
+		}
+
+</style>
+<title>Mapping with D3</title>
+</head>
+
+
+
+<body>
+    <div class="container">
+	       <div id="map"></div>
+    </div>
+    <div class="container">
+	       <div id="chart"></div>
+    </div>
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+	<script src="http://d3js.org/topojson.v2.min.js"></script>
+	<script src="https://d3js.org/d3-queue.v2.min.js"></script>
+	<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+	<script src="https://d3js.org/d3-format.v1.min.js"></script>
+	<!-- Page elements and content go here. -->
+	<script>
+		// Our D3 code will go here.
+
+        var width = 1200,
+            height = 800;
+
+
+		var albersProjection = d3.geoAlbers()
+			.scale( 200000 )
+			.rotate( [71.057,0] )
+			.center( [0, 42.313] )
+			.translate( [width/2,height/2] );
+
+		var path = d3.geoPath()
+		    .projection(albersProjection);
+
+        // create SVG elements in map HTML element
+        var map = d3.select("#map").append("svg")
+        	.attr("width", width)
+        	.attr("height", height);
+
+        var chart = d3.select("#chart").append("svg")
+        	.attr("width", width)
+        	.attr("height", height);
+
+		var x = d3.scaleLinear()
+			.domain([0.1, 0.3])
+			.rangeRound([600, 700]);
+
+		var color_domain = d3.range(0.0,0.5,0.1);
+		color_domain = color_domain.map(function(each_element){
+		    return Number(each_element.toFixed(2));
+		});
+
+		var color_scheme = d3.schemeBlues[5];
+
+		var color = d3.scaleThreshold()
+		    .domain(color_domain)
+		    .range(color_scheme);
+
+
+
+		// legend
+		var g = map.append("g")
+			.attr("class", "key")
+			.attr("transform", "translate(0,40)");
+
+
+		g.selectAll("rect")
+			  .data(color.range().map(function(d) {
+			      d = color.invertExtent(d);
+			      if (d[0] == null) d[0] = x.domain()[0];
+			      if (d[1] == null) d[1] = x.domain()[1];
+				  //if (d[0] > d[1]) d[0] = -1 * d[0];
+			      return d;
+			    }))
+			  .enter().append("rect")
+			    .attr("height", 8)
+			    .attr("x", function(d) { return x(d[0]); })
+			    .attr("width", function(d) { return Math.abs(x(d[1]) - x(d[0])); })
+			    .attr("fill", function(d) { return color(d[0]); });
+
+			g.append("text")
+			    .attr("class", "caption")
+			    .attr("x", x.range()[0]-50)
+			    .attr("y", -6)
+			    .attr("fill", "#000")
+			    .attr("text-anchor", "start")
+			    .attr("font-weight", "bold")
+			    .text("% of 311 Request from Twitter");
+
+			g.call(d3.axisBottom(x)
+			    .tickSize(13)
+			    .tickFormat(function(x, i) { return i ? x : x + "%"; })
+			    .tickValues(color.domain())
+
+				)
+			  .select(".domain")
+			    .remove();
+
+
+        // Create Tooltip
+        var tooltip = d3.select("body")
+                                    .append("div")
+                                    .attr("class","tooltip")
+                                    .style("font-family", "'Open Sans', sans-serif")
+                                	.style("font-size", "12px")
+                                	.style("z-index", "10")
+                                    .style("padding", "5px")
+                                    .style("background-color","white")
+                                	.style("opacity", 0.7)
+                                    .style("visibility", "hidden");
+
+
+
+		// Load data
+		d3.queue()
+		    .defer(d3.json, "data0/boston_neigh.json")
+			.defer(d3.csv, "data0/boston_311_totals.csv")
+		    .await(ready); // Run 'ready' when JSONs are loaded
+			// Ready Function, runs when data is loaded
+
+		function ready(error, neigh, data_cnt) {
+			if (error) throw error;
+
+			var PercById = {};
+            var DistById = {};
+
+		    data_cnt.forEach(function(d) {
+			    PercById[d.id] = +d.twit_count/+d.tot_count*100;
+                DistById[d.id] = d.code;
+			  });
+              console.log(PercById)
+              console.log(DistById)
+
+			map.append("g")
+			    .attr("class", "zones")
+			    .selectAll("path")
+			    .data(topojson.feature(neigh, neigh.objects.boston_neigh).features)
+			    .enter().append("path")
+                .attr("d", path)
+                .style("fill", function(d) { return color(PercById[d.properties.OBJECTID]);
+                })
+                //The next line assigns each district a class based on its district number
+				.attr("class", function(d) { return DistById[d.properties.OBJECTID]; })
+                .on("mouseover", function(d){
+                        d3.selectAll("." + DistById[d.properties.OBJECTID]).classed("hover",true);
+                		tooltip.style("visibility", "visible")
+                                        .text(d.properties.Name + ": " + Number(PercById[d.properties.OBJECTID].toFixed(2)) + "%");
+                	    })
+                .on("mousemove", function(d){
+                		tooltip.style("top", (d3.event.pageY-10)+"px")
+                                        .style("left",(d3.event.pageX+10)+"px")
+                        })
+                .on("mouseout", function(d){
+                        d3.select(this).style('fill',function(d){
+                            return color(PercById[d.properties.OBJECTID])});
+                        d3.selectAll("." + DistById[d.properties.OBJECTID]).classed("hover",false);
+                		tooltip.style("visibility", "hidden");
+                	    })
+
+            // STACKED BAR CHART WITH HOVER
+
+            var margin = {top: 20, right: 100, bottom: 30, left: 100},
+        	    width = +map.attr("width") - margin.left - margin.right,
+        	    height = +map.attr("height") - margin.top - margin.bottom,
+        	    g = chart.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        	var x = d3.scaleBand()
+        	    .rangeRound([0, width])
+        	    .paddingInner(0.05)
+        	    .align(0.1);
+
+        	var y = d3.scaleLinear()
+        	    .rangeRound([height, 0]);
+
+        	var z = d3.scaleOrdinal()
+        	    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+
+            var keys = data_cnt.columns.slice(2,-2);
+            console.log(keys);
+            console.log(data_cnt.columns);
+
+        	  data_cnt.sort(function(a, b) { return b.tot_count - a.tot_count; });
+        	  x.domain(data_cnt.map(function(d) { return d.Name; }));
+        	  y.domain([0, d3.max(data_cnt, function(d) { return +d.tot_count; })]).nice();
+        	  z.domain(keys);
+
+              //console.log(d3.stack().keys(keys)(data_cnt));
+
+        	  g.append("g")
+        	    .selectAll("g")
+        	    .data(d3.stack().keys(keys)(data_cnt))
+        	    .enter().append("g")
+        	      .attr("fill", function(d) { return z(d.key); })
+        	    .selectAll("rect")
+        	    .data(function(d) { return d; })
+        	    .enter().append("rect")
+        	      .attr("x", function(d) { return x(d.data.Name); })
+        	      .attr("y", function(d) { return y(d[1]); })
+        	      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+        	      .attr("width", x.bandwidth())
+                  .attr("class", function (d) { return d.data.code;})
+                  .on("mouseover", function(d) {
+                  					//d3.select(this).classed("hover",true);
+                  					d3.selectAll("." + d.data.code).classed("hover",true);
+                  				})
+                  .on("mouseout", function(d) {
+                  				//d3.select(this).classed("hover",false);
+                  				d3.selectAll("." + d.data.code).classed("hover", false);
+                  			})
+                  ;
+
+
+        	  g.append("g")
+        	      .attr("class", "axis")
+        	      .attr("transform", "translate(0," + height + ")")
+        	      .call(d3.axisBottom(x))
+        	      .selectAll("text")
+        	        .style("text-anchor", "end")
+        	        .attr("dx", "-.8em")
+        	        .attr("dy", ".15em")
+        	        .attr("transform", "rotate(-65)");;;
+
+        	  g.append("g")
+        	      .attr("class", "axis")
+        	      .call(d3.axisLeft(y).ticks(null, "s"))
+        	    .append("text")
+        	      .attr("x", 2)
+        	      .attr("y", y(y.ticks().pop()) + 0.5)
+        	      .attr("dy", "0.32em")
+        	      .attr("fill", "#000")
+        	      .attr("font-weight", "bold")
+        	      .attr("text-anchor", "start")
+        	      .text("Total 311 Calls");
+
+        	  var legend = g.append("g")
+        	      .attr("font-family", "sans-serif")
+        	      .attr("font-size", 10)
+        	      .attr("text-anchor", "end")
+        	    .selectAll("g")
+        	    .data(keys.slice().reverse())
+        	    .enter().append("g")
+        	      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+        	  legend.append("rect")
+        	      .attr("x", width - 19)
+        	      .attr("width", 19)
+        	      .attr("height", 19)
+        	      .attr("fill", z);
+
+        	  legend.append("text")
+        	      .attr("x", width - 24)
+        	      .attr("y", 9.5)
+        	      .attr("dy", "0.32em")
+        	      .text(function(d) { return d; });
+
+
+			}
+
+
+
+	</script>
+</body>
+</html>
